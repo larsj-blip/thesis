@@ -1,0 +1,26 @@
+\section{goals}
+
+the goals for this master was to gauge the effects of fault injection on approximate computing techniques.
+
+The largest issue with this project has been getting stuff to run. The project is not supposed to be a commentary on the state of software, but the age-old adage holds: if there are no tests, how do we know that it runs? The build also fails, this is a known issue but nevertheless.
+
+(it is also a skill issue, the skill being begging desperately for help)
+
+The theory needed for this project should be:
+
+- knowing the concrete difference between floating and fixed point representations and how computations with the representations differ.
+- knowing the domains applicable to the concrete technology that I am looking at
+- knowing alternative methods, and their applicable fields
+
+
+
+
+
+Fixed to floating point conversion is only effective for IO-heavy operations with a lot of writes and reads because of smaller bit widths; processors (and GPUs) have advanced FPUs that have less instructions (but what about the cycle count???). Fixed point math is not always guaranteed to be faster, some calculations require less operations on floating point representations than for fixed point representations. The fixed point benefits stem from being able to use less bits, reduce IO, perform simpler operations.
+
+My masters thesis focuses on float to fixed conversion as a form of precision reduction. This means that the findings in this thesis may not be applicable to other approaches to approximate computing, such as memoization (kind of like caching) and loop perforation (skipping some iterations of a computation, requires a type of loop that perform calculations that get iteratively better), just to name a few common ones. 
+
+Certain fault types are more interesting to inject than others. For a fault to be interesting, we need one of the following criteria fulfilled:
+1. the fault is representative; i.e. the fault presents in a fashion similar to the way it would in the wild, it is not a fault that would easily be caught by the test suite
+2. the fault is results in a subtle error; humans may struggle to discern the result of the fault as wither an error or a correct result. 
+3. the error presents in a significantly different way for approximate and non-approximate computing methods

@@ -1,0 +1,60 @@
+\section{Literature study}
+
+
+% Studies into reliability within approximate computing have not yet ventured into applying software fault injection to evaluate the reliability/fault tolerance of approximate computing algorithms/frameworks.
+
+% Injecting transient faults in hardware is common for evaluating fault tolerance in both approximate and non-approximate computing systems.(cite cite cite...) This is done to assess the quality of the 
+
+%Performing fault injection to obtain an overview of the fault tolerance of a system is prevalent in the literature. Though the means of obtaining fault tolerance are the same, the fault injection is performed for different reasons. 
+The main purpose of the pre-project was to perform a literature study of the state of the art within assessment of reliability in approximate computing studies. The search consisted of an initial reliability-focused snowballing-phase based on the seminal paper on reliability written by \citet{avizienis2004basic}, and the paper on representative fault injection by \citet{natella2016assessing}.
+
+
+The search was split into two parts: one with a focus on methods for conducting fault injection to obtain information about a systems' fault tolerance, and one with a specific focus on fault tolerance measurements within approximate computing.
+The search for fault tolerance measurements in approximate computing was conducted on scopus with the following search term:
+"approximate computing" AND ( "accuracy" OR "precision" ) AND ( tool OR technique OR algorithm ) AND software AND fault AND tolerance.
+This yielded 9 papers that I triaged according to the relevance to the project. 
+The search for fault tolerance in general was conducted with the following search term: 
+fault AND tolerance AND injection.
+This produced 1905 results, which is more than I could go through within the time limits of the project. Therefore I sorted the results according to citations and selected papers from the first 10 pages. The relevant papers were then selected through reading the title and the abstract. 
+%The sources displayed were collected using a combination of snowballing from papers that are viewed as the golden standard, and a systematic review. 
+
+\subsection{Fault tolerance}
+
+\citet{natella2012fault} presents an effective approach for performing software fault injection to inject representative faults in software. They claim that not only is what kind of fault injected important, but also the location. Injecting faults that would be caught by the test suite in any case is not helpful, and therefore they created an overview of representative fault locations for three different application types. The amount of faults that are representative vary between the three application types. 
+
+Other tools such as Xception \citep{carreira1998xception} have been proposed to emulate hardware faults (such as bit flips) within software, as opposed to software faults (injecting software bugs). Other projects also look at hardware faults, and compares between different instruction set architectures \citep{venkatagiri2019gem5, fratin2018code}.
+
+\citet{li2021understanding} proposes a method for measuring fault tolerance they call fault tolerance threshold, which is the threshold where an error goes from being an error to a failure. This threshold is set arbitrarily dependent on the application domain. They propose a method in which they inject faults into a program, and record how the fault propagates throughout the system, and register whether the fault results in an acceptable result, a silent data corruption or a crash. The faults injected are all bit-flips, and represent operational errors, either with corruptions in memory or radiations induced faults. 
+
+\citet{fratin2018code} presents a comparison of reliability in different hardware architectures when running different types of benchmarks that stresses different parts of the system. The focus is not generalized processor architectures, but rather accelerators such as GPUs, and hardware you either see in a datacenter or in edge computing systems. They show that different programs and different architectures will benefit differently from adjusting the acceptable error. The way they measure reliability is with the use of failure in time (FIT), which is defined as amount of failures per billion operating hours~\citep{ReliabilityTexasInstruments}, and with MBTF.
+%mean time between failure.
+
+
+
+\subsection{Fault tolerance in approximate computing systems}
+
+% search term: fault AND tolerance AND injection
+As approximate computing is becoming more common, more investigations into the reliability aspect of approximate computing are being performed. 
+%Other works present methods of increasing the fault tolerance of approximate computing,
+This is necessary in order to enable the usage of approximate computing within fields that typically do not lend themselves to approximate computing, such as critical infrastructure or scientific high-performance computing~\citep{wunderlich2016pushing, rodrigues2018performances}.
+
+%\citet{wunderlich2016pushing} maintains that to enable the adoption of approximate computing within fields that have strict requirements on accuracy, fault tolerance measures must be put in place. These fault tolerance measures must adapt to changes in error resilience throughout the code. They show examples for an approximate algorithm for matrix operation, and show that the approximate algorithm achieved good enough accuracy together with mostly increased performance. 
+\citet{wunderlich2016pushing} suggest using probabilistic error functions to define error boundaries within approximate computing, which can then be used to evaluate the degree of approximation that the application can tolerate. They apply this to iterative linear solvers accelerated using hardware implemented approximate computing, and achieve mostly more efficient processing while retaining the necessary amount of accuracy.  
+
+
+
+There are also multiple papers describing fault injection within novel approximate computing hardware~\citep{anghel2018test, aponte2018review}, but this falls outside the scope of this paper. 
+
+\citet{aponte2018review} covers methods of using approximate computing indirectly through redundancy mechanisms to increase the fault tolerance of a system, though does not delve into the intrinsic fault tolerance of different methods and strategies of approximate computing. 
+
+Gem5-approxylizer is a tool created to inject errors 
+%faults (even though they call them errors)
+into dynamic instructions bit by bit, to evaluate how faults propagate throughout the program and how they affect the accuracy of the program~\citep{venkatagiri2019gem5}. The paper performs fault injection on approximate computing applications, and allows the user to map locations in code which are extra sensitive to faults. This does not take in account software faults (i.e. bugs) and therefore the fault tolerance in the developmental phase, but is nevertheless interesting for fault tolerance in the operational phase.  Moreover gem5-approxilyzer is significantly newer than the fault injection tools mentioned earlier. 
+ % In related works, the motivation for fault injection, the way it is performed and the metrics that are derived from the fault injection varies. 
+ % However, the metrics they use to generate data about reliability vary greatly, and do not allow different results to be compared. 
+ 
+
+
+% \subsection{studies of fault tolerance within approximate computing}
+
+% There have been multiple studies investigating the inherent fault tolerance of approximate computing tools. (citecitecite) There are multiple studies performing hardware fault injection to quantify inherent fault tolerance. Different studies have different results: one proposes approximate computing as a solution for increased fault tolerance, (cite cite cite) while another finds approximate computing affects system fault tolerance negatively(cite cite cite). The metrics used to quantify the related properties of the systems vary: some use numerical error(cite cite cite), while some count the distribution of different kinds of resultant errors (cite cite cite).

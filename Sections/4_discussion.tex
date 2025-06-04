@@ -1,0 +1,49 @@
+\section{Research Gap and Project Objectives}
+
+Existing literature explores different kinds of fault tolerance within specialized software systems, both in hardware and software. Papers tend to have a narrow focus, either on the operational or the developmental phase, and do not present a general applicability regardless of the domain.
+%and those papers that do make a comparison of different techniques, do not present findings in such a way that the target audience can make a decision based on the findings. 
+The goal for this paper is to enable the direct comparison of strengths and weaknesses within approximate computing methods that are implemented in tools or frameworks. 
+
+%hat is missing, is a paper that explores the effects of fault tolerance throughout the whole lifecycle of a software project. This leads to the question for approximate computing: how resilient to faults is an approximate computing system throughout the whole development lifecycle?
+
+%None of the papers mentioned take a lifecycle- view of approximate computing, and therefore there is no solid consensus on the fault tolerance properties of approximate computing.
+
+%To get an overview of fault tolerance properties we can utilize what already exists in the literature, and combine it:
+Measuring both operational and developmental fault tolerance is important to get the full picture of how a system behaves.
+To properly gauge {\em developmental fault tolerance}, we can use G-SWFIT~\citep{duraes2006emulation}. G-SWFIT can be used to inject faults that are representative for software in general (faults that appear in real world production code, and that is missed by the test suite). Importantly, \citet{natella2012fault} makes the point that using fault types that represent the occurrence of faults in the real world is vital for making a trustworthy evaluation of fault tolerance. With all the progress that has been made in the programming world since 2013, especially regarding AI code generation, it is therefore important to verify that the fault categories mentioned are still representative.
+
+{\em Operational faults} can be injected at runtime using Gem5-Approxilyzer~\citep{venkatagiri2019gem5}, this to gain an overview of how changes in the code affect the reliability of the finished executable. This tool allows the user to follow how operational errors propagate throughout the code unlike anything that can practically be performed only in hardware.
+
+%Measuring both developmental and operational fault tolerance is important to get the full picture of how a system behaves.
+
+
+\subsection{How to measure fault tolerance}
+%Fault tolerance does not have a unit. Faults vary in terms of how big of an error they can cause and how easy they are to detect, and therefore it is not so easy as to just state "the application is tolerant to n faults."
+Measuring fault tolerance is done through the concept of coverage. Coverage refers to the degree in which errors are detected, and how well the system recovers from these errors. 
+
+Measuring fault tolerance in approximate computing requires some extra considerations:
+\begin{enumerate}
+    \item  In approximate computing techniques, not all parts of the system is approximate; for example in loop perforation, only the loop is affected, precision scaling only operates on certain variables that exist in certain contexts, etc.
+    \item Not only operational faults may affect the approximate parts differently, but also the developmental faults. The literature does not cover whether developmental faults have a greater effect on approximate computing systems than precise computing systems. 
+\end{enumerate}
+
+%3. what are more things?
+
+There are many metrics in the studies that have previously been mentioned that can be applied for approximate computing applications. In addition to using preexisting metrics, the project will explore new metrics to gauge different aspects of fault tolerance within approximate computing.  
+
+  The project will include performing mutation testing to evaluate a test suite. The mutation testing will be performed using \citet{papadakis2019mutation} as a guide, to evaluate whether the approximate computing strategies have different effects on a test suite.
+
+% $$\frac{\text{faults resulting in error in approximate implementation}}{\text{faults resulting in error in precise implementation}}$$
+
+To see the effect that the approximate blocks have on the rest of the system the project will include injecting faults in the code blocks that contain approximate constructs: 
+$$\frac{\text{faults that cause error in approximate block}}{\text{faults that create errors that propagate to the result}}$$
+This will be measured both with operational faults through the gem5-approxilyzer\citep{venkatagiri2019gem5}, as well as with injected software faults. 
+
+
+These metrics will be used in combination with the G-SWFIT technique for injection of representative faults\citep{duraes2006emulation}.
+This is not an exhaustive list. As the project progresses additional metrics may be developed.
+
+
+One thing that these metrics lack, is the ability to directly compare between different methods of approximate computing. This stems from the fact even though source code for different types of approximate computing may be similar, in practice faults may affect similar source code locations in very different ways. 
+
+A goal for the project is therefore to combine and revise existing metrics to allow for better comparisons between approximate computing systems, providing researchers and developers with an overview of the reliability of an approximate computing tool in addition to performance and energy efficiency.  

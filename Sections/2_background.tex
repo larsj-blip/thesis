@@ -1,0 +1,52 @@
+\section{Background}
+\label{sec:background}
+This section introduces prerequisite knowledge for this project within approximate computing and reliability.
+
+\subsection{Approximate Computing}
+
+Approximate computing is a method for obtaining better performance in programs and better power efficiency, at the cost of a reduction in the precision in the computation or of the results. There are multiple ways of performing approximate computing, both in hardware and 
+software~\citep{han2013approximate}.
+\citet{mittal2016survey} names some categories within approximate computing, including precision scaling, loop perforation and memoization. What these techniques have in common, is that they do not require specialized hardware to obtain performance and power efficiency benefits. There are other techniques, but they either depend on specialized hardware, such as neural networks used to approximate complex functions~\citep{mittal2016survey}, or are entirely implemented in hardware~\citep{han2013approximate} and therefore falls outside the scope of this project.
+
+\begin{description}
+\item[Precision scaling] is a broader category, encompassing allocating fewer mantissa bits in floating point variables~\citep{tagliavini2018flexfloat}, as well as converting floating point variables to fixed point variables as in the tool TAFFO~\citep{cherubin2019taffo}. 
+
+\item[Loop perforation] means selecting a loop, and not running all of the iterations of the loop, thereby performing less work at the cost of precision. This method of approximate computation cannot always be used due to losing too much accuracy, and therefore requires verifying precision loss in the loop~\citep{li2018sculptor}. 
+
+\item[Memoization] means re-using and approximating results for an expensive function, thereby incurring a lower amount of cycles~\citep{mittal2016survey}. 
+\end{description}
+
+The implementations of the aforementioned techniques vary in how much extra work they place on the user of the implementation, and can be provided in multiple ways such as a compiler pass that only requires adding annotations to a standard precise program~\citep{cherubin2019taffo, sharif2021approxtuner} or a program library~\citep{mirsalari2023translib, tagliavini2018flexfloat}.
+
+Some examples of approximate computing frameworks are TAFFO~\citep{cherubin2019taffo}, which uses annotations made by the programmer to convert floating point values into fixed point variables, FlexFloat~\citep{tagliavini2018flexfloat} that is provided as an API to allow users to tune precision of floats through decreasing the mantissa and exponent bit width, and Green~\citep{baek2010green}, which among other things performs loop perforation, i.e., removes some iterations of an expensive loop to lessen the amount of work. These techniques all increase power efficiency of the computation as well as reducing the accuracy of the result, but they achieve it in different ways.
+
+The acceptable accuracy and required fault tolerance varies between different projects because the requirements can be quite different depending on what domain the code is targeting. The consequences of a home automation light sensor reporting incorrect values is far less than, e.g., a computer that controls a water dam.
+
+
+
+Approximate computing is today mostly used within applications where incorrect output does not necessarily make the results useless. In image processing, errors in output can be produced willfully such as for image compression, and while heavy compression will eventually render the image unusable, lesser compression will produce a "faulty" image compared to the original photo data, but to the human eye the differences will be negligible~\citep{subramanya2001image}.
+
+This project aims to investigate how approximate computing can be used in applications where correct output matters to a higher degree, through analyzing the application's {\em reliability} requirements, and the difference in reliability with or without approximate computing.
+
+
+\subsection{Reliability}
+Reliability is defined by \citet{avizienis2004basic} as continuity of correct service, and this project uses the definitions therein.
+
+ Fault tolerance is one way of attaining reliability. Fault tolerance is defined in \citet{avizienis2004basic} as the avoidance of service failure in the presence of faults. The other definitions that are relevant for this project are listed below: 
+ 
+ \begin{itemize}
+     \item a fault is defined as something that may or may not lead to an error, such as an incorrect comparison operator, or a corrupted database entry. 
+     \item An error is defined as an internal state in which a part of the entire system deviates from correct service, but not necessarily affecting the external state of the system. An example of this could be a router dropping packets. This is an error, because the router is not providing the packets it should to the endpoint, but given the packets are transferred using tcp, the packets will be re-sent, thus not resulting in a service failure. 
+     \item A failure is defined as an event in which the service a system provides does not correspond with the functional specification of the system. An example of this would be getting "HTTP 404 error not found" screen when trying to access a website.
+ \end{itemize}
+ 
+\citet{avizienis2004basic} defines many different types of faults, all of which can be put into two categories: operational and developmental. Operational faults are faults that occur during the operation of the service and encompasses environmental and physical interactions with the service, while developmental faults concern the faults that appear in the design and construction phase of the service. 
+
+\subsection{Fault Injection}
+One method of evaluating whether a system or an application is reliable is through fault injection. Fault injection can be performed on the hardware level or on the software level. Hardware fault injection attempts to simulate environmental interference with the system, i.e., simulate operational faults, through magnetic interference, ionizing radiation, or physically applying external voltage to pins to turn a logical 0 to a 1~\citep{arlat1993fault}. Software fault injection concerns injecting faults emulating human non-deliberate faults not covered by test cases to simulate a scenario in which production code is shipped with a fault~\citep{natella2012fault}. 
+In addition to this, there are also tools that emulate hardware faults (bit flips), such as Xception~\citep{carreira1998xception}, as well as tools that can simulate how these emulated hardware faults propagate through a program when run on specific instruction sets~\citep{venkatagiri2019gem5}, and these can be useful in combination with the aforementioned fault injection method. 
+
+
+Mutation testing is a method of doing fault injection where the goal is to verify the quality of your test suite~\citep{papadakis2019mutation}. Mutation testing is done by creating "mutants" of your code by deliberately changing vital parts of the code base to see whether these changes are still caught by the tests.
+If the tests still pass given mutated code, this "mutant" is said to survive (which is bad). To "kill" the mutant, the tests need to be changed so that the test catches both the mutated code as well as the original code.
+

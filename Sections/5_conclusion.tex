@@ -1,0 +1,28 @@
+\section{Further work}
+
+%Reliability is a not a metric that is easy to measure by itself, and difficult to define for a system with absolute certainty.
+
+Reliability is not a static measurement that can be forecasted with 100\% accuracy; the reliability of a system is an expression of the probability of a service experiencing a failure. Quantifying the reliability of a system can however aid you in taking precautions, and help you decide whether the risks of some arbitrary software are small enough to justify the usage in a specific domain. There exists strategies that allow programmers to make informed decisions about the required accuracy of their program, such as \citet{wunderlich2016pushing}, but only in the operational phase. In addition to this, not all outputs of functions or systems can be explicitly categorized as inside or outside a numeric error tolerance limit as they propose in \citet{wunderlich2016pushing} and \citet{li2021understanding}.
+%Estimating how reliable a system is, i.e. to what extent a system can provide correct service being exposed to faults, as systems are both during the developmental phase and in the operational phase. 
+
+Approximate computing is special in the sense that the criteria for "correct service" is already relaxed through accepting a wider range of outputs with the same domain as an equivalent non-approximating system. This itself affects the reliability of a system, and to realistically gauge the reliability of an approximate system compared to a precise equivalent requires a targeted effort.
+
+For the M.Sc. project the goal would be to design a model or system that can be applied to multiple generalized approximate systems. The performance aspect of approximate computing systems is already heavily covered in other papers, without relating the results to reliability. 
+
+The masters' project will start with a brief literature review, to ensure that no important papers have been missed. 
+%The literature review of this project has been performed as a combination of snowballing and a structured literature review. I believe that this project covers the most significant projects, but a proper structured review will make this a certainty.
+
+The next two weeks will be focused on assembling/adapting a benchmark that represents a common workload in an approximate computing tool, such as TAFFO\citep{cherubin2019taffo}. 
+%This will include tools that are easily available either through providing source code online, or getting the source code through contacting the authors of the project directly. 
+Further two weeks will be spent on assembling the fault tolerance metrics, and finally one month each for:
+\begin{enumerate}
+    \item Fault injection experiments.
+    \item Extended fault injection experiments, adjusting and refining the metrics.
+    \item Finalizing the thesis report.
+\end{enumerate}
+%The following 6 weeks will be spent analyzing the findings, and using existing fault tolerance measures to evaluate the methods against each other. The complete assembled data will also be used for devising a method of comparing the results between the different methods of approximate computing on even ground. 
+
+
+
+
+% \steSays{Missing a detailed plan for the thesis. Please cover: Benchmark identification, Techniques worth exploring, Metrics to measure, Most appropriate ways to collect fair measurements, etc.}
