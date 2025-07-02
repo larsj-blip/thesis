@@ -1,0 +1,39 @@
+%! Author = lars
+%! Date = 6/22/25
+\section*{Difficulties}
+
+Something something always expect the unexpected.
+
+this project has been a masterclass in what \textit{not} to do when working on a long term project.
+
+\subsection*{Software}
+Code quality is a concept that is difficult to quantify exactly.
+It consists of many factors that relate to the code itself, such as clarity, lack of unnecessary duplication,
+test coverage (this one is actually easy to quantify).
+Other factors relate to the development environment of the code, for instance whether the codebase is built using
+continuous integration and continuous deployment.
+A trend (anectotal for now) in software produced in scientific studies, is that they do not generally follow established norms and rules for software development.
+This leads to code that is not easy to understand (for instance, using
+variable names such as x and y), code that is difficult to continue work on, and perhaps the most critical: code that
+does not run.
+Even worse than writing a paper on a new type of software that is not written using common coding practices, is not making the code that you have written a paper about available to the public.
+
+Reproducibility is one of the most important parts of a scientific paper.
+It allows researchers to verify the findings independent of the original authors and their biases.
+If there is a paper that builds results or data produced by using a program that is either not released or not able to run, the results contained within are not easily verifiable and reproducible.
+
+Multiple approximate computing tools described in papers found in the initial study for this thesis, such as green CITE and \ldots, were simply not available, to a degree invalidating the results in the study.
+
+FlexFloat, another tool found in the study, allows users to manually modify the mantissa and exponent width of a floating point variable, and emulate these custom types on architechtures that do not have them. The tool also allows users to investigate how the error propagates through the program, and choose a fitting custom floating point type. This tool requires building software with these types in mind, and therefore is time consuming to implement for a pre-existing project. Building this tool from the source code was not easily done, however the developers provided a pre-built docker image that was quick to get running.
+
+
+TAFFO is the tool that most of the efforts of this project has been focused on. Taffo is a tool that has been developed for a number of years, and runs as an add-on to the well-established clang compiler in the llvm-project.
+Taffo is the tuning assistant for floating point to fixed point optimisation. The tool consists of 5 passes: the initialization pass, value range analysis, data type allocation, code conversion and error propagation pass.
+
+There is some debate in the developer community about where to document code: some say it is better to document code through the test suite and through descriptive variable naming and the like, while others claim that documentation should be located in separate files. There is a clear consensus though that no documentation is better than wrong documentation.
+The documentation that follows in taffo does not accurately reflect what the best practices are, and the paper that describes taffo does not accurately reflect the current capabilities of the tool.
+
+Building the tool was not intuitive when following the documentation in the repository, for instance the documentations recommends building a specific version of clang from source, and then building taffo while bundling it with this version of clang. The instructions lack certain important factors, such as it being neccesary to specify which system compiler to use when compiling taffo, moreover while using a debug version of clang built from source does not work, it works when downloading pre-built binaries.
+Furthermore, the error-propagation pass does not work any more. This makes it difficult to use this project for other experimental purposes.
+
+The documentation of the annotation syntax is lacking. There is no comprehensive list of what variable types that are supported (or not supported) by the tool, making usage of taffo a betting game.
