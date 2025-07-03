@@ -1,0 +1,23 @@
+\section{Method}
+
+The thesis was supposed to be based around a quantitative study of fault tolerance in programs that apply approximate computing techiques for either performance gains, energy savings, or both.
+
+Fault tolerance would be measured through fault injection campaigns.
+The first fault injection campaign consisted of single bit fault injections. This consisted of taking a sample benchmark from the taffo repository, compiling it to an intermediate format such as the LLVM IR, then flipping single bits one by one and noting the effect that it has on the end result of the benchmark compared to the unmodified version of the benchmark.
+
+The next campaign would be performed on non-benchmark code. The chosen library was OpenCV which is used for computer vision applications in python and c++, more specifically a facial recognition example written using the OpenCV library. The fault injection planned here would also be single bit fault injections in variables, however as the output from these functions are not numbers but a graphical representation of where a face in an image is, the error would be measured in how many frames, if at all, a face is detected in a standard video representation.
+
+To collect data on developmental faults, i.e. faults that do not occur when the code is running but occur during the development of the code, another campaign was planned. This fault injection campaign was inspired by the technique and paper on G-SWFIT.
+
+The tools that were selected for evaluation was floatsmith and taffo. Flexfloat allows for substituting floating point variables with smaller floating point numbers, and allows users to edit both mantissa and exponent width in the floating point variables for custom floating point number representations. Aditionally, flexfloat emulates the floating point operations, so you do not need specialized hardware to run programs using these custom number representations.
+floatsmith is a tool made to perform mixed precision
+
+Taffo is a tool that is made to investigate the effect of substituting floating point variables with fixed point variables, both with respect to total numerical difference in calculations, and differences in execution speed. It is built as a collection of passes that convert code that has been annotated with the range of values that a variable can have. It proceeds to convert that variable to a fixed point type, converting operations done on that variable to fixed point cpu instructions, and propagating the change in types throughout the program.
+
+The first part of this project was dedicated to getting the programs to run on various machines.
+
+Floatsmith was written for ubuntu 18.04, which is no longer supported. This makes building from source difficult, however they supply a prebuilt docker image that is still available at the time of writing.
+After downloading floatsmith, it is relatively straightforward to mount your local folder containing the code you want to optimize.
+
+floatsmith requires users to
+
